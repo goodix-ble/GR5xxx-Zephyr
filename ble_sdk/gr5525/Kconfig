@@ -1,0 +1,25 @@
+# Copyright (c) 2024 Goodix
+# SPDX-License-Identifier: Apache-2.0
+
+if SOC_GR5525
+
+menu "GR5525 Components"
+
+config GOODIX_OPT_MBEDTLS_LIB
+    bool "Enable Goodix opt mbedTLS library"
+    help
+      This option enables the mbedTLS cryptography library.
+
+config GOODIX_HW_SE_LIB
+    bool "Enable GR55xx SE library"
+    help
+      This option enables GR55xx Hardware SE library.
+
+config GOODIX_APP_MEMORY_LIB
+    bool "Enable GR55xx app memory library"
+    help
+      This option enables GR55xx app memory library.
+
+endmenu
+
+endif # SOC_GR5525

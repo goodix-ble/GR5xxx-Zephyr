@@ -1,0 +1,19 @@
+# Copyright (c) 2024 Goodix
+# SPDX-License-Identifier: Apache-2.0
+
+config SOC_SERIES
+    default "gr552x" if SOC_SERIES_GR552X
+
+config SOC_FAMILY_GOODIX
+    bool
+
+config SOC_FAMILY
+    default "goodix" if SOC_FAMILY_GOODIX
+
+config SOC_SERIES_GR552X
+    bool
+    select SOC_FAMILY_GOODIX
+    help
+        Enable support for GR5525x SoC
+
+rsource "*/Kconfig.soc"

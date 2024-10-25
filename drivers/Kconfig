@@ -1,0 +1,19 @@
+# Copyright (c) 2024 Goodix
+# SPDX-License-Identifier: Apache-2.0
+
+menu "Device Drivers"
+
+# zephyr-keep-sorted-start
+rsource "adc/Kconfig"
+rsource "bluetooth/Kconfig"
+rsource "flash/Kconfig"
+rsource "gpio/Kconfig"
+rsource "i2c/Kconfig"
+rsource "pinctrl/Kconfig"
+rsource "pwm/Kconfig"
+rsource "serial/Kconfig"
+rsource "trng/Kconfig"
+rsource "timer/Kconfig"
+# zephyr-keep-sorted-stop
+
+endmenu

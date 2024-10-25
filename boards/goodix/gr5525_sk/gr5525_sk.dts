@@ -1,0 +1,163 @@
+/*
+ * Copyright (c) 2024, Goodix
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/dts-v1/;
+
+#include <goodix/gr5525.dtsi>
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/pwm/pwm.h>
+#include "gr5525_sk-pinctrl.dtsi"
+
+/ {
+    model = "Goodix GR5525 Starter Kit";
+    compatible = "goodix,gr5525_sk";
+
+    chosen {
+        zephyr,console = &uart0;
+        zephyr,shell-uart = &uart0;
+        zephyr,sram = &sram0;
+        zephyr,flash = &flash0;
+        zephyr,code-partition = &slot0;
+        zephyr,bt-hci = &bt_hci;
+        zephyr,entropy = &trng0;
+    };
+
+    leds {
+        compatible = "gpio-leds";
+        led_0: led_0 {
+            gpios = <&msio 4 GPIO_ACTIVE_LOW>;
+        };
+        led_1: led_1 {
+            gpios = <&msio 5 GPIO_ACTIVE_LOW>;
+        };
+    };
+
+    pwmleds {
+        compatible = "pwm-leds";
+
+        led_pwm_0: led_pwm_0 {
+            pwms = <&pwm1 1 PWM_USEC(20) PWM_POLARITY_INVERTED>;
+        };
+
+        led_pwm_1: led_pwm_1 {
+            pwms = <&pwm1 2 PWM_USEC(20) PWM_POLARITY_INVERTED>;
+        };
+    };
+
+    buttons {
+        compatible = "gpio-keys";
+        button_0: button_0 {
+            gpios = <&aonio 0 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+            label = "Click button K1";
+        };
+        button_1: button_1 {
+            gpios = <&aonio 1 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+            label = "Click button K2";
+        };
+    };
+
+    bt_hci: bt_hci {
+        compatible = "goodix,bt_hci";
+        status = "okay";
+    };
+
+    aliases {
+        led0 = &led_0;
+        led1 = &led_1;
+        pwmled0 = &led_pwm_0;
+        pwmled1 = &led_pwm_1;
+        sw0 = &button_0;
+        sw1 = &button_1;
+        commuart = &uart1;
+    };
+};
+
+&trng0 {
+	status = "okay";
+};
+
+&gpioa {
+	status = "okay";
+};
+
+&gpiob {
+	status = "okay";
+};
+
+&gpioc {
+	status = "okay";
+};
+
+&aonio {
+	status = "okay";
+};
+
+&msio {
+	status = "okay";
+};
+
+&uart0 {
+    pinctrl-0 = <&uart0_tx &uart0_rx>;
+    current-speed = <115200>;
+    pinctrl-names = "default";
+    status = "okay";
+};
+
+&uart1 {
+    pinctrl-0 = <&uart1_tx &uart1_rx>;
+    current-speed = <115200>;
+    pinctrl-names = "default";
+    status = "okay";
+};
+
+&pwm1 {
+	pinctrl-0 = <&pwm1_channel_b &pwm1_channel_c>;
+	pinctrl-names = "default";
+	status = "okay";
+};
+
+&i2c1 {
+    pinctrl-0 = <&i2c1_scl &i2c1_sda>;
+    pinctrl-names = "default";
+    status = "okay";
+};
+
+&flash0 {
+    partitions {
+        compatible = "fixed-partitions";
+
+        #address-cells = <1>;
+        #size-cells = <1>;
+
+        // Goodix bootloader, do not overwrite
+        boot: partition@0 {
+            label = "boot";
+            read-only;
+            reg = <0x0 0x00002000>;
+        };
+
+        // Zephyr Image
+        slot0: partition@2000 {
+            label = "slot0";
+            // TODO: configurable image size
+            reg = <0x00002000 0x000ee000>;
+        };
+
+        // storage
+        storage_partition: partition@f0000 {
+            label = "storage";
+            // TODO: configurable storage size
+            reg = <0x000f0000 0x0000e000>;
+        };
+
+        // NVDS, internally used by SDK
+        nvds: partition@fe000 {
+            label = "nvds";
+            reg = <0x000fe000 0x00002000>;
+        };
+    };
+};
+

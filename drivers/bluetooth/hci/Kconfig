@@ -1,0 +1,22 @@
+# Copyright (c) 2024 Goodix
+# SPDX-License-Identifier: Apache-2.0
+
+choice BT_HCI_BUS_TYPE
+	prompt "Bluetooth HCI driver"
+
+config BT_GR5525
+    bool "GR5525 HCI based driver"
+    depends on SOC_SERIES_GR552X
+    help
+      This driver provides access to the GR5525's Bluetooth adapter. It
+      is only intended to be used with the GR5525 build of Zephyr.
+
+
+endchoice
+
+if BT_GR5525
+
+config BT_BUF_ACL_RX_SIZE
+  default 251
+
+endif # BT_GR5525

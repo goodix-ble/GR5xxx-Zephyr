@@ -1,0 +1,13 @@
+# Copyright (c) 2024 Goodix
+# SPDX-License-Identifier: Apache-2.0
+
+description: |
+    Gr5xxx TRNG (True Random Number Generator).
+
+compatible: "goodix,gr5xxx-trng"
+
+include: base.yaml
+
+properties:
+  reg:
+    required: true

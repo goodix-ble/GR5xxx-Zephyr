@@ -1,0 +1,9 @@
+# Copyright (c) 2024 Goodix
+# SPDX-License-Identifier: Apache-2.0
+
+config PWM_GR5XXX
+    bool "GR5XXX PWM driver"
+    default y
+    depends on DT_HAS_GOODIX_GR5XXX_PWM_ENABLED
+    help
+        GR5XXX PWM driver

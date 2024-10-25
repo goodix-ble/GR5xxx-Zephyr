@@ -1,0 +1,56 @@
+# Copyright (c) 2024 Goodix
+# SPDX-License-Identifier: Apache-2.0
+
+description: |
+  GR552x Pin Controller Node
+  Based on pincfg-node.yaml binding.
+
+compatible: "goodix,gr5xxx-pinctrl"
+
+include:
+  - base.yaml
+
+child-binding:
+  include:
+    - name: "pincfg-node.yaml"
+      property-allowlist:
+        - bias-disbale
+        - bias-pull-down
+        - bias-pull-up
+        - input-schmitt-enable
+        - input-schmitt-disable
+
+  properties:
+    port:
+      required: true
+      type: string
+      enum:
+        - "gpioa"
+        - "gpiob"
+        - "gpioc"
+        - "aon_gpio"
+        - "msio"
+
+    pin:
+      required: true
+      type: int
+
+    mux:
+      required: true
+      type: int
+
+    is_analog:
+      type: boolean
+
+    drive-strength:
+      type: string
+      enum:
+        - "low"
+        - "medium"
+        - "high"
+        - "ultra"
+      default: "medium"
+      description: |
+        The drive strength of a pin, only works on GR5525
+
+

@@ -1,0 +1,43 @@
+# Copyright (c) 2024 Goodix
+# SPDX-License-Identifier: Apache-2.0
+
+config ADC_GR5XXX
+    bool "GR5xxx ADC driver"
+    default y
+    select ADC_CONFIGURABLE_INPUTS
+    depends on DT_HAS_GOODIX_GR5XXX_ADC_ENABLED
+
+config ADC_GR5XXX_IGNORE_UNSUPPORTED_PARAMETERS
+    bool "Ignore unsupported channel_cfg parameters"
+    default y
+    depends on ADC_GR5XXX
+    help
+      Indicates whether to ignore unsupported channel_cfg parameters in setup channel function.
+
+config ADC_GR5XXX_ADC_CHANNEL_COUNT
+    int "Number of ADC channels"
+    range 1 32
+    default 1
+    depends on ADC_GR5XXX
+    help
+      Number of ADC channels to be supported by the driver. Each channel
+      needs a dedicated structure in RAM that stores the ADC settings
+      to be used when sampling this channel.
+
+config ADC_GR5XXX_MAX_OVERSAMPLING_EXP
+    int "Maximum oversampling exponent"
+    range 0 7
+    default 7
+    depends on ADC_GR5XXX
+    help
+      Maximum `oversampling` parameter that can be passed in struct adc_sequence.
+      Oversampling is done in software.
+
+config ADC_GR5XXX_SUPPORT_ZEPHYR_CONVERT
+    bool "Support adc_raw_to_millivolts implemented by zephyr"
+    default y
+    depends on ADC_GR5XXX
+    help
+      Whether to support adc_raw_to_millivolts() conversion. If disabled,
+      please use gdx_adc_raw_to_voltage() function for converting ADC raw
+      value to real voltage

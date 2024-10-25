@@ -1,0 +1,23 @@
+# Copyright (c) 2024 Goodix
+# SPDX-License-Identifier: Apache-2.0
+
+description: GR55XX PWM
+
+compatible: "goodix,gr5xxx-pwm"
+
+include: [base.yaml, pwm-controller.yaml, pinctrl-device.yaml]
+
+properties:
+    reg:
+        required: true
+    pinctrl-0:
+        required: true
+    pinctrl-names:
+        required: true
+    "#pwm-cells":
+        const: 3
+
+pwm-cells:
+  - channel
+  - period
+  - flags

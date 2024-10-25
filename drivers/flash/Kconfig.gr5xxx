@@ -1,0 +1,13 @@
+# Copyright (c) 2024 Goodix
+# SPDX-License-Identifier: Apache-2.0
+
+config SOC_FLASH_GR55XX
+	bool "GR55XX SOC SiP Flash driver"
+	default y
+	depends on DT_HAS_GOODIX_GR5XXX_FLASH_CONTROLLER_ENABLED
+	select FLASH_HAS_DRIVER_ENABLED
+	select FLASH_JESD216
+	select FLASH_PAGE_LAYOUT
+	select FLASH_HAS_PAGE_LAYOUT
+	help
+	  Enable XQSPI-NOR support on the GR55XX SOCs.

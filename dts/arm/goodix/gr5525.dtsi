@@ -1,0 +1,215 @@
+/*
+ * Copyright (c) 2024, Goodix
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+#include <mem.h>
+#include <arm/armv7-m.dtsi>
+
+/ {
+    chosen {
+        zephyr,flash-controller = &flash_controller;
+    };
+
+    cpus {
+        #address-cells = <1>;
+        #size-cells = <0>;
+
+        cpu0: cpu@0 {
+            device_type = "cpu";
+            compatible = "arm,cortex-m4";
+            reg = <0>;
+            cpu-power-states = <&state0 &state1>;
+        };
+    };
+
+    power-states {
+        state0: state0 {
+            compatible = "zephyr,power-state";
+            power-state-name = "suspend-to-idle";
+            min-residency-us = <1000>;
+            exit-latency-us = <100>;
+        };
+
+        state1: state1 {
+            compatible = "zephyr,power-state";
+            power-state-name = "soft-off";
+            min-residency-us = <5000>;
+            exit-latency-us = <1000>;
+        };
+    };
+
+    soc {
+        flash_controller: flash-controller@200000 {
+            compatible = "goodix,gr5xxx-flash-controller";
+            reg = <0x00200000 DT_SIZE_K(8192)>;
+            partial-erase;
+            #address-cells = <1>;
+            #size-cells = <1>;
+
+            flash0: flash@200000 {
+                reg = <0x00200000 DT_SIZE_K(1024)>;
+                compatible = "soc-nv-flash";
+                erase-block-size = <4096>;
+                write-block-size = <4>;
+            };
+        };
+
+        sram0: memory@20004000 {
+            reg = <0x20004000 DT_SIZE_K(240)>;
+        };
+
+        pinctrl: pin-controller {
+            /* Pin controller is a "virtual" device since GR5xxx SoCs do pin
+             * control directly in GPIO config.
+             */
+            compatible = "goodix,gr5xxx-pinctrl";
+        };
+
+        gpioa: gpio@40010000 {
+            compatible = "goodix,gr5xxx-gpio";
+            gpio-controller;
+            reg = <0x40010000 0x1000>;
+            interrupts = <6 128>;
+            ngpios = <16>;
+            #gpio-cells = <2>;
+        };
+
+        gpiob: gpio@40011000 {
+            compatible = "goodix,gr5xxx-gpio";
+            gpio-controller;
+            reg = <0x40011000 0x1000>;
+            interrupts = <7 128>;
+            ngpios = <16>;
+            #gpio-cells = <2>;
+        };
+
+        gpioc: gpio@40012000 {
+            compatible = "goodix,gr5xxx-gpio";
+            gpio-controller;
+            reg = <0x40012000 0x1000>;
+            interrupts = <18 128>;
+            ngpios = <2>;
+            #gpio-cells = <2>;
+        };
+
+        aonio: gpio@4000a1e4 {
+            compatible = "goodix,gr5xxx-gpio";
+            gpio-controller;
+            reg = <0x4000a1e4 0x24>;
+            interrupts = <27 128>;
+            ngpios = <8>;
+            #gpio-cells = <2>;
+        };
+
+        msio: msio@4000a1d4 {
+            compatible = "goodix,gr5xxx-msio";
+            gpio-controller;
+            reg = <0x4000a1d4 0x10>;
+            ngpios = <8>;
+            #gpio-cells = <2>;
+        };
+
+        uart0: serial@4000c500 {
+            compatible = "goodix,gr5xxx-uart";
+            reg = <0x4000c500 0x100>;
+            interrupts = <12 160>;
+            status = "disabled";
+        };
+
+        uart1: serial@4000c600 {
+            compatible = "goodix,gr5xxx-uart";
+            reg = <0x4000c600 0x100>;
+            interrupts = <13 160>;
+            status = "disabled";
+        };
+
+        uart2: serial@4000c700 {
+            compatible = "goodix,gr5xxx-uart";
+            reg = <0x4000c700 0x100>;
+            interrupts = <52 160>;
+            status = "disabled";
+        };
+
+        uart3: serial@4000c800 {
+            compatible = "goodix,gr5xxx-uart";
+            reg = <0x4000c800 0x100>;
+            interrupts = <53 160>;
+            status = "disabled";
+        };
+
+        pwm0: pwm@4000cb00 {
+            compatible = "goodix,gr5xxx-pwm";
+            reg = <0x4000cb00 0x100>;
+            #pwm-cells = <3>;
+            status = "disabled";
+        };
+
+        pwm1: pwm@4000cc00 {
+            compatible = "goodix,gr5xxx-pwm";
+            reg = <0x4000cc00 0x100>;
+            #pwm-cells = <3>;
+            status = "disabled";
+        };
+
+        trng0: trng@40017800 {
+            compatible = "goodix,gr5xxx-trng";
+            reg = <0x40017800 0x34>;
+            status = "disabled";
+        };
+
+        adc: adc@4000e000 {
+            compatible = "goodix,gr5xxx-adc";
+            reg = <0x4000e000 0x100>;
+            status = "disabled";
+            #address-cells = <1>;
+            #size-cells = <0>;
+            #io-channel-cells = <1>;
+        };
+
+        i2c0: i2c@4000c300 {
+            compatible = "goodix,gr5xxx-i2c";
+            reg = <0x4000c300 0x100>;
+            interrupts = <14 128>;
+            status = "disabled";
+            #address-cells = <1>;
+            #size-cells = <0>;
+        };
+
+        i2c1: i2c@4000c400 {
+            compatible = "goodix,gr5xxx-i2c";
+            reg = <0x4000c400 0x100>;
+            interrupts = <15 128>;
+            status = "disabled";
+            #address-cells = <1>;
+            #size-cells = <0>;
+        };
+
+        i2c2: i2c@4000fa00 {
+            compatible = "goodix,gr5xxx-i2c";
+            reg = <0x4000fa00 0x100>;
+            interrupts = <58 128>;
+            status = "disabled";
+            #address-cells = <1>;
+            #size-cells = <0>;
+        };
+
+        i2c3: i2c@4000fb00 {
+            compatible = "goodix,gr5xxx-i2c";
+            reg = <0x4000fb00 0x100>;
+            interrupts = <59 128>;
+            status = "disabled";
+            #address-cells = <1>;
+            #size-cells = <0>;
+        };
+    };
+};
+
+&nvic {
+	arm,num-irq-priority-bits = <8>;
+};
+
+&systick {
+    status = "disabled";
+};

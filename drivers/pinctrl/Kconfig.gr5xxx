@@ -1,0 +1,9 @@
+# Copyright (c) 2024 Goodix
+# SPDX-License-Identifier: Apache-2.0
+
+config PINCTRL_GR5XXX
+    bool "GR5xxx pin controller driver"
+    default y
+    depends on DT_HAS_GOODIX_GR5XXX_PINCTRL_ENABLED
+    help
+        GR5xxx pin controller driver

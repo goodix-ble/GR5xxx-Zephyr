@@ -1,0 +1,10 @@
+# Copyright (c) 2024 Goodix
+# SPDX-License-Identifier: Apache-2.0
+
+config TRNG_GR5XXX
+	bool "GR55XX SOC TRNG driver"
+	default y
+	depends on DT_HAS_GOODIX_GR5XXX_TRNG_ENABLED
+	select ENTROPY_HAS_DRIVER
+	help
+	  Enable TRNG support on the GR55XX SOCs.

@@ -1,0 +1,9 @@
+# Copyright (c) 2024 Goodix
+# SPDX-License-Identifier: Apache-2.0
+
+west-commands:
+  - file: scripts/install_gp_runner.py
+    commands:
+    - name: install-gp-runner
+      class: InstallGpRunner
+      help: install GProgrammer as a flash runner

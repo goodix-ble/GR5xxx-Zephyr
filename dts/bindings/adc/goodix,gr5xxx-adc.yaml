@@ -1,0 +1,39 @@
+# Copyright (c) 2024 Goodix
+# SPDX-License-Identifier: Apache-2.0
+
+description: Goodix GR5xxx ADC node
+
+compatible: "goodix,gr5xxx-adc"
+
+include: [adc-controller.yaml, pinctrl-device.yaml]
+
+properties:
+  reg:
+    required: true
+  ref_voltage:
+    required: true
+    type: string
+    description: |
+      ADC reference value
+    default: "1p6"
+    enum:
+      - "0p8"
+      - "1p2"
+      - "1p6"
+  clock:
+    required: true
+    type: string
+    description: |
+      ADC clock
+    default: "16M"
+    enum:
+      - "16M"
+      - "8M"
+      - "4M"
+      - "1M"
+      - "16K"
+      - "8K"
+      - "4K"
+
+io-channel-cells:
+  - input

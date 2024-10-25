@@ -1,0 +1,29 @@
+# Copyright (c) 2024 Goodix
+# SPDX-License-Identifier: Apache-2.0
+
+if SOC_GR5525
+
+config NUM_IRQS
+    default 66
+
+# Prevent using newlib-nano for maimum compatibility
+choice LIBC_IMPLEMENTATION
+	default NEWLIB_LIBC
+endchoice
+
+config PINCTRL
+    default y
+
+config GPIO
+    default y
+
+config PWM
+    default y
+
+config SERIAL
+    default y
+
+config ENTROPY_GENERATOR
+    default y
+
+endif # SOC_GR5525

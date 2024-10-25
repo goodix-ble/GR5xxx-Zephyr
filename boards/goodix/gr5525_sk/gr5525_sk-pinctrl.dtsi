@@ -1,0 +1,57 @@
+/*
+ * Copyright (c) 2024, Goodix
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+#include <zephyr/dt-bindings/pinctrl/gr5xxx_pinctrl.h>
+
+&pinctrl {
+    uart0_tx: uart0_tx {
+        port = "gpioa";
+        pin = <10>;
+        mux = <2>;
+    };
+
+    uart0_rx: uart0_rx {
+        port = "gpioa";
+        pin = <11>;
+        mux = <2>;
+    };
+
+    uart1_tx: uart1_tx {
+        port = "gpioa";
+        pin = <7>;
+        mux = <3>;
+    };
+
+    uart1_rx: uart1_rx {
+        port = "gpioa";
+        pin = <6>;
+        mux = <3>;
+    };
+
+    pwm1_channel_b: pwm1_channel_b {
+        port = "msio";
+        pin = <4>;
+        mux = <0>;
+    };
+
+    pwm1_channel_c: pwm1_channel_c {
+        port = "msio";
+        pin = <5>;
+        mux = <0>;
+    };
+
+    i2c1_scl: i2c1_scl {
+        port = "gpiob";
+        pin = <14>;
+        mux = <0>;
+    };
+
+    i2c1_sda: i2c1_sda {
+        port = "gpiob";
+        pin = <10>;
+        mux = <0>;
+    };
+};

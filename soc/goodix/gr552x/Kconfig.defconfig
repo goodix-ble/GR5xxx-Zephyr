@@ -1,0 +1,21 @@
+# Copyright (c) 2024 Goodix
+# SPDX-License-Identifier: Apache-2.0
+
+if SOC_SERIES_GR552X
+
+rsource "Kconfig.defconfig.gr552*"
+
+config SYS_CLOCK_HW_CYCLES_PER_SEC
+    default 96000000 if DT_HAS_ARM_ARMV7M_SYSTICK_ENABLED
+    default 32768
+
+config SYS_CLOCK_TICKS_PER_SEC
+    default 10000 if TICKLESS_KERNEL && DT_HAS_ARM_ARMV7M_SYSTICK_ENABLED
+	default 32768 if TICKLESS_KERNEL && !DT_HAS_ARM_ARMV7M_SYSTICK_ENABLED
+	default 128  if !TICKLESS_KERNEL && !DT_HAS_ARM_ARMV7M_SYSTICK_ENABLED
+	default 100
+
+config PM_NEED_ALL_DEVICES_IDLE
+    default y if PM && PM_DEVICE
+
+endif # SOC_SERIES_GR552X

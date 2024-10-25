@@ -1,0 +1,9 @@
+# Copyright (c) 2024 Goodix
+# SPDX-License-Identifier: Apache-2.0
+
+config SOC_GR5525
+    bool
+    select SOC_SERIES_GR552X
+
+config SOC
+    default "gr5525" if SOC_GR5525

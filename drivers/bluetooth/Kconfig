@@ -1,0 +1,20 @@
+# Copyright (c) 2024 Goodix
+# SPDX-License-Identifier: Apache-2.0
+
+if BT_HCI
+
+config BT_HCI_RESERVE
+    int
+    default 0 if BT_H4
+    default 1 if BT_H5
+    # Even if no driver is selected the following default is still
+    # needed e.g. for unit tests.
+    default 1
+    help
+      Headroom that the driver needs for sending and receiving buffers. Add a
+      new 'default' entry for each new driver.
+
+rsource "hci/Kconfig"
+
+endif
+
